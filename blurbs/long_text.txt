@@ -1,0 +1,51 @@
+Topology
+
+Reference: https://www.vedantu.com/question-answer/two-circles-each-of-radius-7cms-intersect-each-class-10-maths-cbse-5fbc7c8ad420b6620ba2ed75
+
+Prompt:
+
+I work in an oil and gas company. A colleague of mine and I have a task assigned to go and look for a raw material ground resource. Both of us are equipped with an instrument which can precisely detect the presence of the resource and measure its distance in meters from the operator of the instrument.
+We start off our tasks positioned at 4000 meters from each other and each instrument reveals the presence of the resource at 4000m or less. 
+Describe the shape of the area where the resource can be located.
+
+Lab Response: 
+
+│ Since we both detect the resource at 4000 meters or less, the resource can be located within the area that is less than or   │
+│ equal to 4000 meters from either one of us. This area would be shaped like a circle with the center being the location of    │
+│ either myself or my colleague. Since we don't know the exact position of the resource, the area remains a circle with a      │
+│ radius of 4000 meters around both our positions.  
+
+
+Correct Response:
+
+Since we both detect the resource at 4000 meters or less, the resource can be located within the area that is less than or   │
+equal to 4000 meters from either one of us. Since both of our instruments are detecting the presence of the resources, the resulting area must be the intersection between two circles whose centers are posioned on each other's circumferences. This would result in an eye-shaped area, something that would remember the Mordor's eye from the famous Lord of the Rings movie. 
+
+
+Prompt:
+
+I work in an oil and gas company. A colleague of mine and I have a task assigned to go and look for a raw material ground resource. Both of us are equipped with an instrument which can precisely detect the presence of the resource and measure its distance in meters from the operator of the instrument.
+We start off our tasks positioned at 7000 meters from each other and each instrument reveals the presence of the resource at 7000 or less. 
+Calculate the the area where the resource can be located.
+
+Lab Response: 
+
+│ The area where the resource can be located is the region within the circle with a radius of 7000 meters from either one of   │
+│ us. The area of this circle can be calculated using the formula for the area of a circle, which is πr², where r is the       │
+│ radius of the circle. In this case, the radius is 7000 meters, so the area would be π(7000)².                                │
+│                                                                                                                              │
+│ To calculate the area, we can use the following steps:                                                                       │
+│ 1. Calculate 7000² = 49000000                                                                                                │
+│ 2. Multiply this value by π: 49000000 * 3.14 = 1538333333.34 square meters                                                   │
+│                                                                                                                              │
+│ So, the area where the resource can be located is approximately 1538333333.34 square meters (rounded to three decimal        │
+│ places).   
+
+Correct Response:
+
+Draw of two circles intersecting each other. Each cirle has the center located on the other circle's circumference. Join the centers of the circles with the points of intersection of the circles to form a quadrilateral (a square in this particular case). Now, find the area of the quadrilateral by dividing it into two right-angle triangles and using the area relation: Area = base × height x 1/2. Subtract the area of this quadrilateral from the sum of areas of two sectors formed. Apply the formula for the area of sectors of the circle given as: Area = πr2×(θ/360), where r = radius of circle, ‘θ’ is the angle formed between the radius. 
+So, the area where the resource can be located is approximately 28 square kilometers
+
+I work in an oil and gas company. A colleague of mine and I have a task assigned to go and look for a raw material ground resource. Both of us are equipped with an instrument which can precisely detect the presence of the resource and measure its distance in meters from the operator of the instrument.
+We start off our tasks positioned at 7000 meters from each other and each instrument reveals the presence of the resource at 7000 or less. 
+Are we going to find the resource?
