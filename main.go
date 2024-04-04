@@ -30,7 +30,18 @@ func main() {
 	totalMaxLineLength := 0
 	if flag.NArg() == 0 {
 		// If no arguments are provided, process stdin
-		err := processStdin(countLines, countWords, countBytes, countChars, countMaxLineLength, totalLines, totalWords, totalChars, totalBytes, totalMaxLineLength)
+		err := processStdin(
+			countLines,
+			countWords,
+			countBytes,
+			countChars,
+			countMaxLineLength,
+			totalLines,
+			totalWords,
+			totalChars,
+			totalBytes,
+			totalMaxLineLength,
+		)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error reading stdin: %v\n", err)
 			os.Exit(1)
@@ -38,7 +49,19 @@ func main() {
 	} else {
 		// Process each file provided as an argument
 		for _, filename := range flag.Args() {
-			err := processFile(filename, countLines, countWords, countBytes, countChars, countMaxLineLength, totalLines, totalWords, totalChars, totalBytes, totalMaxLineLength)
+			err := processFile(
+				filename,
+				countLines,
+				countWords,
+				countBytes,
+				countChars,
+				countMaxLineLength,
+				totalLines,
+				totalWords,
+				totalChars,
+				totalBytes,
+				totalMaxLineLength,
+			)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Error processing file %s: %v\n", filename, err)
 				os.Exit(1)
