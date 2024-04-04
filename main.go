@@ -60,16 +60,17 @@ func main() {
 		bytes := len(data)
 		// step 3 calculate number of words
 		words := CountWords(dataString)
-		// step 2 and 4 calculate number of lines and character
+		// step 4 calculate number of characters
+		chars := len([]rune(dataString))
+		// step 2 lines
 		// Initiate NewScanner object with our file
 		scanner := bufio.NewScanner(file)
-		lines, chars, maxChars := 0, 0, 0
+		lines, maxChars := 0, 0
 		for scanner.Scan() {
 			lines++
 			if maxChars < len(scanner.Text()) {
 				maxChars = len(scanner.Text())
 			}
-			chars += len(scanner.Text())
 		}
 		// Print counts based on provided flags on the same format as wc does
 		if *countLines {
