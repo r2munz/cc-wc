@@ -15,16 +15,18 @@ func main() {
 	countWords := flag.Bool("w", false, "print the word counts")
 	countChars := flag.Bool("m", false, "print the character counts")
 	countBytes := flag.Bool("c", false, "print the bytes counts")
+	countMaxLineLength := flag.Bool("L", false, "print the length of the longest line ")
 	// Parse command-line arguments
 	flag.Parse()
 	// step 5 if no flags are provided, default to count lines, words, and characters
-	if !(*countLines || *countWords || *countBytes || *countChars) {
+	if !(*countLines || *countWords || *countBytes || *countChars || *countMaxLineLength) {
 		*countLines, *countWords, *countBytes = true, true, true
 	}
 	totalLines := 0
 	totalWords := 0
 	totalChars := 0
 	totalBytes := 0
+	totalMaxLineLength := 0
 	// Process each file provided in the arguments
 	for _, filename := range flag.Args() {
 		file, err := os.Open(filename)
@@ -61,9 +63,12 @@ func main() {
 		// step 2 and 4 calculate number of lines and character
 		// Initiate NewScanner object with our file
 		scanner := bufio.NewScanner(file)
-		lines, chars := 0, 0
+		lines, chars, maxChars := 0, 0, 0
 		for scanner.Scan() {
 			lines++
+			if maxChars < len(scanner.Text()) {
+				maxChars = len(scanner.Text())
+			}
 			chars += len(scanner.Text())
 		}
 		// Print counts based on provided flags on the same format as wc does
@@ -83,6 +88,10 @@ func main() {
 			fmt.Printf("%d\t", chars)
 			totalChars += chars
 		}
+		if *countMaxLineLength {
+			fmt.Printf("%d\t", maxChars)
+			totalMaxLineLength += maxChars
+		}
 		fmt.Printf("%s\n", filename)
 	}
 	// bonus step calculate totals
@@ -97,6 +106,9 @@ func main() {
 	}
 	if *countChars {
 		fmt.Printf("%d\t", totalChars)
+	}
+	if *countMaxLineLength {
+		fmt.Printf("%d\t", totalMaxLineLength)
 	}
 	fmt.Printf("%s\n", "total")
 }
