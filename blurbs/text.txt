@@ -1,2 +1,0 @@
-I work in an oil and gas company. A colleague of mine and I have a task assigned to go and look for a raw material ground resource. Both of us are equipped with an instrument which can precisely detect the presence of the resource and measure its distance in meters from the operator of the instrument.
-We start off our tasks positioned at 4000 meters from each other and each instrument reveals the presence of the resource at 4000m or less. 
