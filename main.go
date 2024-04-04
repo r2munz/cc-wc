@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 )
@@ -27,91 +28,137 @@ func main() {
 	totalChars := 0
 	totalBytes := 0
 	totalMaxLineLength := 0
-	// Process each file provided in the arguments
-	for _, filename := range flag.Args() {
-		file, err := os.Open(filename)
+	if flag.NArg() == 0 {
+		// If no arguments are provided, process stdin
+		err := processStdin(countLines, countWords, countBytes, countChars, countMaxLineLength, totalLines, totalWords, totalChars, totalBytes, totalMaxLineLength)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error opening file %s: %v\n", filename, err)
-			continue
+			fmt.Fprintf(os.Stderr, "Error reading stdin: %v\n", err)
+			os.Exit(1)
 		}
-		defer file.Close()
-
-		//reader := bufio.NewReader(os.Stdin)
-		//input, _ := reader.ReadString('\n')
-		data, err := os.ReadFile(filename)
-		if err != nil {
-			fmt.Printf("Error parsing data: %v\n", err)
-			continue
-		}
-		/*
-			var dataString string
-			var bytes int
-			if input == "" {
-				dataString = string(data)
-				bytes = len(data)
-				continue
-			} else {
-				dataString = input
-				bytes = len(input)
-			}
-		*/
-		dataString := string(data)
-		// step 1 calculate number of bytes
-		bytes := len(data)
-		// step 3 calculate number of words
-		words := CountWords(dataString)
-		// step 4 calculate number of characters
-		chars := len([]rune(dataString))
-		// step 2 lines
-		// Initiate NewScanner object with our file
-		scanner := bufio.NewScanner(file)
-		lines, maxChars := 0, 0
-		for scanner.Scan() {
-			lines++
-			if maxChars < len(scanner.Text()) {
-				maxChars = len(scanner.Text())
+	} else {
+		// Process each file provided as an argument
+		for _, filename := range flag.Args() {
+			err := processFile(filename, countLines, countWords, countBytes, countChars, countMaxLineLength, totalLines, totalWords, totalChars, totalBytes, totalMaxLineLength)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Error processing file %s: %v\n", filename, err)
+				os.Exit(1)
 			}
 		}
-		// Print counts based on provided flags on the same format as wc does
-		if *countLines {
-			fmt.Printf("%d\t", lines)
-			totalLines += lines
-		}
-		if *countWords {
-			fmt.Printf("%d\t", words)
-			totalWords += words
-		}
-		if *countBytes {
-			fmt.Printf("%d\t", bytes)
-			totalBytes += int(bytes)
-		}
-		if *countChars {
-			fmt.Printf("%d\t", chars)
-			totalChars += chars
-		}
-		if *countMaxLineLength {
-			fmt.Printf("%d\t", maxChars)
-			totalMaxLineLength += maxChars
-		}
-		fmt.Printf("%s\n", filename)
 	}
-	// bonus step calculate totals
+}
+
+func processFile(
+	filename string,
+	countLines, countWords, countBytes, countChars, countMaxLineLength *bool,
+	totalLines, totalWords, totalBytes, totalChars, totalMaxLineLength int,
+) error {
+	file, err := os.Open(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Printf("Error parsing data: %v\n", err)
+	}
+
+	data, err = os.ReadFile(filename)
+	if err != nil {
+		fmt.Printf("Error parsing data: %v\n", err)
+	}
+
+	dataString := string(data)
+	// step 1 calculate number of bytes
+	bytes := len(data)
+	// step 3 calculate number of words
+	words := CountWords(dataString)
+	// step 4 calculate number of characters
+	chars := len([]rune(dataString))
+	// step 2 lines
+	// Initiate NewScanner object with our file
+	scanner := bufio.NewScanner(file)
+	lines, maxChars := 0, 0
+	for scanner.Scan() {
+		lines++
+		if maxChars < len(scanner.Text()) {
+			maxChars = len(scanner.Text())
+		}
+	}
+	// Print counts based on provided flags on the same format as wc does
 	if *countLines {
-		fmt.Printf("%d\t", totalLines)
+		fmt.Printf("%d\t", lines)
+		totalLines += lines
 	}
 	if *countWords {
-		fmt.Printf("%d\t", totalWords)
+		fmt.Printf("%d\t", words)
+		totalWords += words
 	}
 	if *countBytes {
-		fmt.Printf("%d\t", totalBytes)
+		fmt.Printf("%d\t", bytes)
+		totalBytes += int(bytes)
 	}
 	if *countChars {
-		fmt.Printf("%d\t", totalChars)
+		fmt.Printf("%d\t", chars)
+		totalChars += chars
 	}
 	if *countMaxLineLength {
-		fmt.Printf("%d\t", totalMaxLineLength)
+		fmt.Printf("%d\t", maxChars)
+		totalMaxLineLength += maxChars
 	}
-	fmt.Printf("%s\n", "total")
+	fmt.Printf("%s\n", filename)
+
+	return nil
+}
+
+func processStdin(
+	countLines, countWords, countBytes, countChars, countMaxLineLength *bool,
+	totalLines, totalWords, totalBytes, totalChars, totalMaxLineLength int,
+) error {
+	data, err := io.ReadAll(os.Stdin)
+	if err != nil {
+		return err
+	}
+	dataString := string(data)
+	// step 1 calculate number of bytes
+	bytes := len(data)
+	// step 3 calculate number of words
+	words := CountWords(dataString)
+	// step 4 calculate number of characters
+	chars := len([]rune(dataString))
+	// step 2 lines
+	// Initiate NewScanner object with our file
+	scanner := bufio.NewScanner(os.Stdin)
+	lines, maxChars := 0, 0
+	for scanner.Scan() {
+		lines++
+		if maxChars < len(scanner.Text()) {
+			maxChars = len(scanner.Text())
+		}
+	}
+	// Print counts based on provided flags on the same format as wc does
+	if *countLines {
+		fmt.Printf("%d\t", lines)
+		totalLines += lines
+	}
+	if *countWords {
+		fmt.Printf("%d\t", words)
+		totalWords += words
+	}
+	if *countBytes {
+		fmt.Printf("%d\t", bytes)
+		totalBytes += int(bytes)
+	}
+	if *countChars {
+		fmt.Printf("%d\t", chars)
+		totalChars += chars
+	}
+	if *countMaxLineLength {
+		fmt.Printf("%d\t", maxChars)
+		totalMaxLineLength += maxChars
+	}
+	fmt.Printf("\n")
+	return nil
 }
 
 func CountWords(s string) int {
